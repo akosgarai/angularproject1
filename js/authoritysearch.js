@@ -3,6 +3,7 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
     $scope.activities = [];
 
     $scope.selectedProviderId = '';
+    $scope.selectedActivities = [];
 
     $scope.init = function () {
         $scope.providers = [
@@ -33,6 +34,7 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             }
         ];
         $scope.selectedProviderId = '';
+        $scope.selectedActivities = [];
     };
 
     $scope.getProviderById = function (id) {
@@ -57,6 +59,7 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
         if ($scope.selectedProviderId == '') {
             $scope.selectedProviderId = providerId;
         } else if ($scope.selectedProviderId == providerId){
+            $scope.selectedActivities = [];
             $scope.selectedProviderId = '';
         }
     };
@@ -70,6 +73,15 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             return true;
         }
         return false;
+    };
+
+    $scope.activityClickHandler = function (activityId) {
+        var selActs = $scope.selectedActivities;
+        if (selActs.indexOf(activityId) > -1) {
+            $scope.selectedActivities.splice(selActs.indexOf(activityId), 1);
+        } else {
+            $scope.selectedActivities.push(activityId);
+        }
     };
 }]);
 

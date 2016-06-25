@@ -51,8 +51,9 @@ describe('Example module Unit Tests', function () {
                 }
             ];
             var expectedSelectedProviderId = '';
+            var expectedSelectedActivies = [];
             $scope.init();
-            expect([$scope.providers, $scope.activities, $scope.selectedProviderId]).toEqual([expectedProviders, expectedActivities, expectedSelectedProviderId]);
+            expect([$scope.providers, $scope.activities, $scope.selectedProviderId, $scope.selectedActivities]).toEqual([expectedProviders, expectedActivities, expectedSelectedProviderId, expectedSelectedActivies]);
         });
     });
     describe('TEST003 - $scope.getActivityById function tests', function () {
@@ -161,6 +162,43 @@ describe('Example module Unit Tests', function () {
             var expected = false;
             $scope.providerClickHandler(1);
             expect($scope.needToShowActivity($scope.activities[1])).toEqual(expected);
+        });
+    });
+    describe('TEST007 - $scope.activityClickHandler function tests', function () {
+        var $scope, controller;
+
+        beforeEach(function () {
+            $scope = {};
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            $scope.providers = [];
+            $scope.activities = [];
+            $scope.init();
+        });
+        it('Checking the selectedActivites array - first with empty array and clicking the activity (id:1)', function () {
+            var expected = [1];
+            $scope.activityClickHandler(1);
+            expect($scope.selectedActivities).toEqual(expected);
+        });
+        it('Checking the selectedActivites array - next with [1] array and clicking the activity (id:2)', function () {
+            var expected = [1,2];
+            $scope.activityClickHandler(1);
+            $scope.activityClickHandler(2);
+            expect($scope.selectedActivities).toEqual(expected);
+        });
+        it('Checking the selectedActivites array - next with [1,2] array and clicking the activity (id:2)', function () {
+            var expected = [1];
+            $scope.activityClickHandler(1);
+            $scope.activityClickHandler(2);
+            $scope.activityClickHandler(2);
+            expect($scope.selectedActivities).toEqual(expected);
+        });
+        it('Checking the selectedActivites array - next with [1,2] array and clicking the provider', function () {
+            var expected = [];
+            $scope.providerClickHandler(1);
+            $scope.activityClickHandler(1);
+            $scope.activityClickHandler(2);
+            $scope.providerClickHandler(1);
+            expect($scope.selectedActivities).toEqual(expected);
         });
     });
 });

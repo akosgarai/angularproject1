@@ -16,7 +16,7 @@
             <div class="panel panel-info" data-ng-if="selectedProviderId != ''">
                 <div class="panel-heading">Activities</div>
                 <div class="panel-body">
-                <div class="btn btn-default" data-ng-repeat="a in activities" data-ng-bind="a.label" data-ng-if="needToShowActivity(a)" style="margin-right:5px"></div>
+                    <div class="btn btn-default" data-ng-repeat="a in activities" data-ng-bind="a.label" data-ng-if="needToShowActivity(a)" style="margin-right:5px" data-ng-class="{'btn-default': selectedActivities.indexOf(a['id']) == -1, 'btn-primary' : selectedActivities.indexOf(a['id']) > -1}" data-ng-click="activityClickHandler(a['id'])"></div>
                 </div>
             </div>
         </div>
