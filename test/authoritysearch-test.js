@@ -26,13 +26,11 @@ describe('Example module Unit Tests', function () {
             var expectedProviders = [
                 {
                     'label' : 'Provider1 label',
-                    'id' : 1,
-                    'activityList' : [3]
+                    'id' : 1
                 },
                 {
                     'label' : 'Provider2 label',
-                    'id' : 2,
-                    'activityList' : []
+                    'id' : 2
                 }
             ];
             var expectedActivities = [
@@ -95,8 +93,7 @@ describe('Example module Unit Tests', function () {
         it('try to find an existing id, so it should return provider object', function () {
             var expected = {
                     'label' : 'Provider2 label',
-                    'id' : 2,
-                    'activityList' : []
+                    'id' : 2
             };
             var activity = $scope.getProviderById(2);
             expect(activity).toEqual(expected);

@@ -8,13 +8,11 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
         $scope.providers = [
             {
                 'label' : 'Provider1 label',
-                'id' : 1,
-                'activityList' : [3]
+                'id' : 1
             },
             {
                 'label' : 'Provider2 label',
-                'id' : 2,
-                'activityList' : []
+                'id' : 2
             }
         ];
         $scope.activities = [
