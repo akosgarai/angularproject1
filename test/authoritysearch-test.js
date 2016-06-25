@@ -137,4 +137,32 @@ describe('Example module Unit Tests', function () {
             expect($scope.selectedProviderId).toEqual(expected);
         });
     });
+    describe('TEST006 - $scope.needToShowActivity function tests', function () {
+        var $scope, controller;
+
+        beforeEach(function () {
+            $scope = {};
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            $scope.providers = [];
+            $scope.activities = [];
+            $scope.init();
+        });
+        it('Activity (id:1) should be shown, because of the empty parent list (provider (id:1) is selected)', function () {
+            var expected = true;
+            $scope.providerClickHandler(1);
+            expect($scope.needToShowActivity($scope.activities[0])).toEqual(expected);
+        });
+        it('Activity (id:3) should be shown, because of the same parent list (1) (provider (id:1) is selected)', function () {
+            var expected = true;
+            $scope.activities[2]['parentProviderIds'] = [1];
+            $scope.providerClickHandler(1);
+            expect($scope.needToShowActivity($scope.activities[0])).toEqual(expected);
+        });
+        it('Activity (id:2) should not be shown, because it has different (2) parent list (provider (id:1) is selected)', function () {
+            var expected = false;
+            $scope.activities[1]['parentProviderIds'] = [2];
+            $scope.providerClickHandler(1);
+            expect($scope.needToShowActivity($scope.activities[1])).toEqual(expected);
+        });
+    });
 });

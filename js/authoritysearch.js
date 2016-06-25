@@ -60,5 +60,16 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             $scope.selectedProviderId = '';
         }
     };
+
+    $scope.needToShowActivity = function (activity) {
+        var ids = activity['parentProviderIds'];
+        if (ids.indexOf($scope.selectedProviderId) > -1) {
+            return true;
+        }
+        if (activity['parentProviderIds'].length == 0) {
+            return true;
+        }
+        return false;
+    };
 }]);
 
