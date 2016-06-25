@@ -64,7 +64,11 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
     };
 
     $scope.providerClickHandler = function (providerId) {
-        $scope.selectedProviderId = providerId;
+        if ($scope.selectedProviderId == '') {
+            $scope.selectedProviderId = providerId;
+        } else if ($scope.selectedProviderId == providerId){
+            $scope.selectedProviderId = '';
+        }
     };
 }]);
 

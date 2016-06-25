@@ -138,9 +138,16 @@ describe('Example module Unit Tests', function () {
             $scope.providerClickHandler($scope.getProviderById(2)['id']);
             expect($scope.selectedProviderId).toEqual(expected);
         });
-        it('It checks the selectedProviderId after Clicked selected Provider ("")', function () {
+        it('It checks the selectedProviderId after Clicked selected Provider twice (id:2)', function () {
             var expected = '';
-            $scope.providerClickHandler('');
+            $scope.providerClickHandler(2);
+            $scope.providerClickHandler(2);
+            expect($scope.selectedProviderId).toEqual(expected);
+        });
+        it('It checks the selectedProviderId after Clicked selected Provider (id:2) and Provider (id:1) in this order', function () {
+            var expected = 2;
+            $scope.providerClickHandler(2);
+            $scope.providerClickHandler(1);
             expect($scope.selectedProviderId).toEqual(expected);
         });
     });
