@@ -42,12 +42,12 @@ describe('Example module Unit Tests', function () {
                 {
                     'label' : 'activity label 2',
                     'id' : 2,
-                    'parentProviderIds' : []
+                    'parentProviderIds' : [2]
                 },
                 {
                     'label' : 'hidden activity label',
                     'id' : 3,
-                    'parentProviderIds' : []
+                    'parentProviderIds' : [1]
                 }
             ];
             var expectedSelectedProviderId = '';
@@ -69,7 +69,7 @@ describe('Example module Unit Tests', function () {
             var expected = {
                 'label' : 'hidden activity label',
                 'id' : 3,
-                'parentProviderIds' : []
+                'parentProviderIds' : [1]
             };
             var activity = $scope.getActivityById(3);
             expect(activity).toEqual(expected);
@@ -154,13 +154,11 @@ describe('Example module Unit Tests', function () {
         });
         it('Activity (id:3) should be shown, because of the same parent list (1) (provider (id:1) is selected)', function () {
             var expected = true;
-            $scope.activities[2]['parentProviderIds'] = [1];
             $scope.providerClickHandler(1);
             expect($scope.needToShowActivity($scope.activities[0])).toEqual(expected);
         });
         it('Activity (id:2) should not be shown, because it has different (2) parent list (provider (id:1) is selected)', function () {
             var expected = false;
-            $scope.activities[1]['parentProviderIds'] = [2];
             $scope.providerClickHandler(1);
             expect($scope.needToShowActivity($scope.activities[1])).toEqual(expected);
         });

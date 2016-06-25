@@ -24,12 +24,12 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             {
                 'label' : 'activity label 2',
                 'id' : 2,
-                'parentProviderIds' : []
+                'parentProviderIds' : [2]
             },
             {
                 'label' : 'hidden activity label',
                 'id' : 3,
-                'parentProviderIds' : []
+                'parentProviderIds' : [1]
             }
         ];
         $scope.selectedProviderId = '';
