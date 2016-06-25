@@ -41,5 +41,14 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             }
         ];
     };
+
+    $scope.getActivityById = function (id) {
+        for (var e in $scope.activities) {
+            if ($scope.activities[e]['id'] == id) {
+                return $scope.activities[e];
+            }
+        }
+        return {};
+    };
 }]);
 
