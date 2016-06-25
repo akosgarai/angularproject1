@@ -9,13 +9,11 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             {
                 'label' : 'Provider1 label',
                 'id' : 1,
-                'status' : 'default',
                 'activityList' : [3]
             },
             {
                 'label' : 'Provider2 label',
                 'id' : 2,
-                'status' : 'default',
                 'activityList' : []
             }
         ];

@@ -13,6 +13,12 @@
                     <div class="btn btn-default" data-ng-repeat="provider in providers" data-ng-bind="provider.label" style="margin-right:5px;" data-ng-click="providerClickHandler(provider['id'])" data-ng-class="{'btn-default' : selectedProviderId == '', 'btn-primary' : provider['id'] == selectedProviderId, 'disabled' : selectedProviderId != '' && selectedProviderId != provider['id']}"></div>
                 </div>
             </div>
+            <div class="panel panel-info" data-ng-if="selectedProviderId != ''">
+                <div class="panel-heading">Activities</div>
+                <div class="panel-body">
+                <div class="btn btn-default" data-ng-repeat="a in activities" data-ng-bind="a.label" data-ng-if="!a.hiddenFlag" style="margin-right:5px" data-ng-click="getAuthoritySelectorMock(selectedProvider, a.id)"></div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
