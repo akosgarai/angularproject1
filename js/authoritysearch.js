@@ -2,6 +2,8 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
     $scope.providers = [];
     $scope.activities = [];
 
+    $scope.selectedProviderId = '';
+
     $scope.init = function () {
         $scope.providers = [
             {
@@ -40,6 +42,16 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
                 'childActivity' : []
             }
         ];
+        $scope.selectedProviderId = '';
+    };
+
+    $scope.getProviderById = function (id) {
+        for (var e in $scope.providers) {
+            if ($scope.providers[e]['id'] == id) {
+                return $scope.providers[e];
+            }
+        }
+        return {};
     };
 
     $scope.getActivityById = function (id) {
@@ -49,6 +61,10 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             }
         }
         return {};
+    };
+
+    $scope.providerClickHandler = function (providerId) {
+        $scope.selectedProviderId = providerId;
     };
 }]);
 

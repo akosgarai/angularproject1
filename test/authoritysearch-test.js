@@ -60,8 +60,9 @@ describe('Example module Unit Tests', function () {
                     'childActivity' : []
                 }
             ];
+            var expectedSelectedProviderId = '';
             $scope.init();
-            expect([$scope.providers, $scope.activities]).toEqual([expectedProviders, expectedActivities]);
+            expect([$scope.providers, $scope.activities, $scope.selectedProviderId]).toEqual([expectedProviders, expectedActivities, expectedSelectedProviderId]);
         });
     });
     describe('TEST003 - $scope.getActivityById function tests', function () {
@@ -89,6 +90,58 @@ describe('Example module Unit Tests', function () {
             var expected = {};
             var activity = $scope.getActivityById(5);
             expect(activity).toEqual(expected);
+        });
+    });
+    describe('TEST004 - $scope.getProviderById function tests', function () {
+        var $scope, controller;
+
+        beforeEach(function () {
+            $scope = {};
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            $scope.providers = [];
+            $scope.activities = [];
+            $scope.init();
+        });
+        it('try to find an existing id, so it should return provider object', function () {
+            var expected = {
+                    'label' : 'Provider2 label',
+                    'id' : 2,
+                    'status' : 'default',
+                    'activityList' : []
+            };
+            var activity = $scope.getProviderById(2);
+            expect(activity).toEqual(expected);
+        });
+        it('try to find an invalid id, so it should return empty object', function () {
+            var expected = {};
+            var activity = $scope.getProviderById(5);
+            expect(activity).toEqual(expected);
+        });
+    });
+    describe('TEST005 - $scope.providerClickHandler function tests', function () {
+        var $scope, controller;
+
+        beforeEach(function () {
+            $scope = {};
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            $scope.providers = [];
+            $scope.activities = [];
+            $scope.init();
+        });
+        it('It checks the selectedProviderId after Clicked Provider (id:2)', function () {
+            var expected = 2;
+            $scope.providerClickHandler(2);
+            expect($scope.selectedProviderId).toEqual(expected);
+        });
+        it('It checks the selectedProviderId after Clicked Provider (id:2)', function () {
+            var expected = 2;
+            $scope.providerClickHandler($scope.getProviderById(2)['id']);
+            expect($scope.selectedProviderId).toEqual(expected);
+        });
+        it('It checks the selectedProviderId after Clicked selected Provider ("")', function () {
+            var expected = '';
+            $scope.providerClickHandler('');
+            expect($scope.selectedProviderId).toEqual(expected);
         });
     });
 });
