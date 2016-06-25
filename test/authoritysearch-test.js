@@ -39,23 +39,17 @@ describe('Example module Unit Tests', function () {
                 {
                     'label' : 'activity label 1',
                     'id' : 1,
-                    'hiddenFlag' : false,
-                    'displayCount' : 0,
-                    'childActivity' : []
+                    'parentProviderIds' : []
                 },
                 {
                     'label' : 'activity label 2',
                     'id' : 2,
-                    'hiddenFlag' : false,
-                    'displayCount' : 0,
-                    'childActivity' : []
+                    'parentProviderIds' : []
                 },
                 {
                     'label' : 'hidden activity label',
                     'id' : 3,
-                    'hiddenFlag' : true,
-                    'displayCount' : 0,
-                    'childActivity' : []
+                    'parentProviderIds' : []
                 }
             ];
             var expectedSelectedProviderId = '';
@@ -77,9 +71,7 @@ describe('Example module Unit Tests', function () {
             var expected = {
                 'label' : 'hidden activity label',
                 'id' : 3,
-                'hiddenFlag' : true,
-                'displayCount' : 0,
-                'childActivity' : []
+                'parentProviderIds' : []
             };
             var activity = $scope.getActivityById(3);
             expect(activity).toEqual(expected);
