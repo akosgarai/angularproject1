@@ -4,19 +4,32 @@
 <script type="text/javascript" src="js/authoritysearch.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
-<body>
-    <div class="container">
-        <div data-ng-app="authoritysearch" data-ng-controller="authoritysearchController" data-ng-init="init()">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Providers</div>
-                <div class="panel-body">
-                    <div class="btn btn-default" data-ng-repeat="provider in providers" data-ng-bind="provider.label" style="margin-right:5px;" data-ng-click="providerClickHandler(provider['id'])" data-ng-class="{'btn-default' : selectedProviderId == '', 'btn-primary' : provider['id'] == selectedProviderId, 'disabled' : selectedProviderId != '' && selectedProviderId != provider['id']}"></div>
+<body data-ng-app="authoritysearch">
+    <div class="container" data-ng-controller="authorityNavbarController">
+        <ul class="nav nav-tabs">
+            <li role="presentation" data-ng-class="{'active': app == 'search'}"><a data-ng-click="setApp('search')">Search</a></li>
+            <li role="presentation" data-ng-class="{'active': app == 'list'}"><a data-ng-click="setApp('list')">List</a></li>
+        </ul>
+        <div data-ng-controller="authoritysearchController" data-ng-init="init()">
+            <div data-ng-if="app == 'search'">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Providers</div>
+                    <div class="panel-body">
+                        <div class="btn btn-default" data-ng-repeat="provider in providers" data-ng-bind="provider.label" style="margin-right:5px;" data-ng-click="providerClickHandler(provider['id'])" data-ng-class="{'btn-default' : selectedProviderId == '', 'btn-primary' : provider['id'] == selectedProviderId, 'disabled' : selectedProviderId != '' && selectedProviderId != provider['id']}"></div>
+                    </div>
+                </div>
+                <div class="panel panel-info" data-ng-if="selectedProviderId != ''">
+                    <div class="panel-heading">Activities</div>
+                    <div class="panel-body">
+                        <div class="btn btn-default" data-ng-repeat="a in activities" data-ng-bind="a.label" data-ng-if="needToShowActivity(a)" style="margin-right:5px" data-ng-class="{'btn-default': selectedActivities.indexOf(a['id']) == -1, 'btn-primary' : selectedActivities.indexOf(a['id']) > -1}" data-ng-click="activityClickHandler(a['id'])"></div>
+                    </div>
                 </div>
             </div>
-            <div class="panel panel-info" data-ng-if="selectedProviderId != ''">
-                <div class="panel-heading">Activities</div>
-                <div class="panel-body">
-                    <div class="btn btn-default" data-ng-repeat="a in activities" data-ng-bind="a.label" data-ng-if="needToShowActivity(a)" style="margin-right:5px" data-ng-class="{'btn-default': selectedActivities.indexOf(a['id']) == -1, 'btn-primary' : selectedActivities.indexOf(a['id']) > -1}" data-ng-click="activityClickHandler(a['id'])"></div>
+            <div data-ng-if="app == 'list'">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">List app</div>
+                    <div class="panel-body">
+                    </div>
                 </div>
             </div>
         </div>

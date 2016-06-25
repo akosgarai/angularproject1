@@ -83,5 +83,10 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             $scope.selectedActivities.push(activityId);
         }
     };
-}]);
+}]).controller('authorityNavbarController', ['$scope', function ($scope) {
+    $scope.app = 'search';
 
+    $scope.setApp = function (appName) {
+        $scope.app = appName;
+    };
+}]);

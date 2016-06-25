@@ -201,4 +201,27 @@ describe('Example module Unit Tests', function () {
             expect($scope.selectedActivities).toEqual(expected);
         });
     });
+    describe('TESTNAVBAR -Navbar related test - navbar controller functions', function () {
+        var $scope, controller;
+
+        beforeEach(function () {
+            $scope = {};
+            controller = $controller('authorityNavbarController', { '$scope' : $scope});
+        });
+        it('Checking the app after start', function () {
+            var expected = "search";
+            expect($scope.app).toEqual(expected);
+        });
+        it('Checking the setApp function v1', function () {
+            var expected = "list";
+            $scope.setApp('list');
+            expect($scope.app).toEqual(expected);
+        });
+        it('Checking the setApp function v2', function () {
+            var expected = "search";
+            $scope.setApp('list');
+            $scope.setApp('search');
+            expect($scope.app).toEqual(expected);
+        });
+    });
 });
