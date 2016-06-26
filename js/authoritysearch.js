@@ -54,7 +54,7 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
     };
     $scope.getTerminalIds = function () {
         $scope.terminals = [];
-        if ($scope.selectedProviderId == '') {
+        if ($scope.selectedProviderId == '' || typeof ($scope.authorityMap[$scope.selectedProviderId]) == 'undefined') {
             return;
         }
         var provider = $scope.authorityMap[$scope.selectedProviderId];
@@ -98,7 +98,14 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
     $scope.authorities = [];
     $scope.authorityMap = {};
 
-    $scope.init = function () {
+    $scope.initAppMock = function () {
+
+        /*
+         * google.script.run
+         * .withSuccessHandler('name-of-success-handler-function')
+         * .withErrorHandler('name-of-error-handler-function')
+         * .serverSideFunctionName()
+         * */
         $scope.providers = [
             {
                 'label' : 'Provider1 label',

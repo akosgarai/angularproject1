@@ -4,7 +4,7 @@
 <script type="text/javascript" src="js/authoritysearch.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
-<body data-ng-app="authoritysearch" data-ng-controller="authorityInitializatorController" data-ng-init="init()">
+<body data-ng-app="authoritysearch" data-ng-controller="authorityInitializatorController" data-ng-init="initAppMock()">
     <div class="container" data-ng-controller="authorityNavbarController">
         <ul class="nav nav-tabs">
             <li role="presentation" data-ng-class="{'active': app == 'search'}"><a data-ng-click="setApp('search')">Search</a></li>
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div data-ng-if="app == 'list'" class="row">
-            <div data-ng-controller="authorityListController" data-ng-init="init()">
+            <div data-ng-controller="authorityListController" >
                 <div class="col-md-4 col-sm-6 col-xs-12" data-ng-repeat="authority in authorities">
                     <div class="panel panel-default">
                         <div class="panel-heading" data-ng-bind="authority.label"></div>

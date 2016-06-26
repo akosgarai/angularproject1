@@ -109,7 +109,7 @@ describe('Example module Unit Tests', function () {
                     4 : {'type' : 'terminal', 'id' : 3}
                 }
             };
-            $scope.init();
+            $scope.initAppMock();
             expect([
                 $scope.providers,
                 $scope.activities,
@@ -180,7 +180,7 @@ describe('Example module Unit Tests', function () {
             controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
-            $scope.init();
+            $scope.initAppMock();
             controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('try to find an existing id, so it should return provider object', function () {
@@ -205,7 +205,7 @@ describe('Example module Unit Tests', function () {
             controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
-            $scope.init();
+            $scope.initAppMock();
             controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('It checks the selectedProviderId after Clicked Provider (id:2)', function () {
@@ -239,7 +239,7 @@ describe('Example module Unit Tests', function () {
             controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
-            $scope.init();
+            $scope.initAppMock();
             controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('Activity (id:1) should be shown, because of the empty parent list (provider (id:1) is selected)', function () {
@@ -266,7 +266,7 @@ describe('Example module Unit Tests', function () {
             controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
-            $scope.init();
+            $scope.initAppMock();
             controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('Checking the selectedActivites array - first with empty array and clicking the activity (id:1)', function () {
@@ -304,7 +304,7 @@ describe('Example module Unit Tests', function () {
             controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
-            $scope.init();
+            $scope.initAppMock();
             controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('try to find an existing id, so it should return provider object', function () {
@@ -333,7 +333,7 @@ describe('Example module Unit Tests', function () {
             controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
-            $scope.init();
+            $scope.initAppMock();
             controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('Clicking to provider (id:1) and activity (id:3) and checking the terminal authorities', function () {
