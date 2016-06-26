@@ -50,10 +50,52 @@ describe('Example module Unit Tests', function () {
                     'parentProviderIds' : [1]
                 }
             ];
+            var expectedAuthorities = [
+                {
+                    'id' : 1,
+                    'label' : 'Authority Label Nr1',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                },
+                {
+                    'id' : 2,
+                    'label' : 'Authority Label Nr2',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                }
+            ];
+            var expectedAuthorityMap = {
+                1 : {
+                    1 : {'type' : 'terminal', 'id' : 1},
+                    3 : {'type' : 'terminal', 'id' : 2}
+                },
+                2 : {
+                    1 : {'type' : 'terminal', 'id' : 1},
+                    2 : {'type' : 'terminal', 'id' : 2}
+                }
+            };
             var expectedSelectedProviderId = '';
             var expectedSelectedActivies = [];
             $scope.init();
-            expect([$scope.providers, $scope.activities, $scope.selectedProviderId, $scope.selectedActivities]).toEqual([expectedProviders, expectedActivities, expectedSelectedProviderId, expectedSelectedActivies]);
+            expect([
+                $scope.providers,
+                $scope.activities,
+                $scope.selectedProviderId,
+                $scope.selectedActivities,
+                $scope.authorities,
+                $scope.authorityMap
+            ]).toEqual([
+                expectedProviders,
+                expectedActivities,
+                expectedSelectedProviderId,
+                expectedSelectedActivies,
+                expectedAuthorities,
+                expectedAuthorityMap
+            ]);
         });
     });
     describe('TEST003 - $scope.getActivityById function tests', function () {
@@ -199,6 +241,108 @@ describe('Example module Unit Tests', function () {
             $scope.activityClickHandler(2);
             $scope.providerClickHandler(1);
             expect($scope.selectedActivities).toEqual(expected);
+        });
+    });
+    describe('TEST008 - $scope.getAuthorityById function tests', function () {
+        var $scope, controller;
+
+        beforeEach(function () {
+            $scope = {};
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            $scope.providers = [];
+            $scope.activities = [];
+            $scope.init();
+        });
+        it('try to find an existing id, so it should return provider object', function () {
+            var expected = {
+                'id' : 2,
+                'label' : 'Authority Label Nr2',
+                'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                'authorityPhone' : '+3610000000',
+                'authorityEmail' : 'info@example.com',
+                'authorityWeb' : 'http://www.example.com'
+            };
+            var activity = $scope.getAuthorityById(2);
+            expect(activity).toEqual(expected);
+        });
+        it('try to find an invalid id, so it should return empty object', function () {
+            var expected = {};
+            var activity = $scope.getAuthorityById(5);
+            expect(activity).toEqual(expected);
+        });
+    });
+    describe('TEST009 - $scope.getTerminalIds function tests', function () {
+        var $scope, controller;
+
+        beforeEach(function () {
+            $scope = {};
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            $scope.providers = [];
+            $scope.activities = [];
+            $scope.init();
+        });
+        it('Clicking to provider (id:1) and activity (id:3) and checking the terminal authorities', function () {
+            var expected = [
+                {
+                    'id' : 2,
+                    'label' : 'Authority Label Nr2',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                }
+            ];
+            $scope.providerClickHandler(1);
+            $scope.activityClickHandler(3);
+            expect($scope.terminals).toEqual(expected);
+        });
+        it('Clicking to provider (id:1) and activities in the following order (id:3, id:1) and checking the terminal authorities', function () {
+            var expected = [
+                {
+                    'id' : 2,
+                    'label' : 'Authority Label Nr2',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                },
+                {
+                    'id' : 1,
+                    'label' : 'Authority Label Nr1',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                }
+            ];
+            $scope.providerClickHandler(1);
+            $scope.activityClickHandler(3);
+            $scope.activityClickHandler(1);
+            expect($scope.terminals).toEqual(expected);
+        });
+        it('Clicking to provider (id:1) and activities in the following order (id:1, id:3) and checking the terminal authorities', function () {
+            var expected = [
+                {
+                    'id' : 1,
+                    'label' : 'Authority Label Nr1',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                },
+                {
+                    'id' : 2,
+                    'label' : 'Authority Label Nr2',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                }
+            ];
+            $scope.providerClickHandler(1);
+            $scope.activityClickHandler(1);
+            $scope.activityClickHandler(3);
+            expect($scope.terminals).toEqual(expected);
         });
     });
     describe('TESTNAVBAR -Navbar related test - navbar controller functions', function () {

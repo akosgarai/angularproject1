@@ -24,17 +24,32 @@
                         <div class="btn btn-default" data-ng-repeat="a in activities" data-ng-bind="a.label" data-ng-if="needToShowActivity(a)" style="margin-right:5px" data-ng-class="{'btn-default': selectedActivities.indexOf(a['id']) == -1, 'btn-primary' : selectedActivities.indexOf(a['id']) > -1}" data-ng-click="activityClickHandler(a['id'])"></div>
                     </div>
                 </div>
+                <div class="row">
+                    <div data-ng-if="terminals[0]" class="col-md-4 col-sm-6 col-xs-12" data-ng-repeat="authority in terminals">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-ng-bind="authority.label"></div>
+                            <div class="panel-body">
+                                <label for="">Address:</label><p name="" id="" data-ng-bind="authority.authorityAddress"></p>
+                                <label for="">Phone:</label><p name="" id="" data-ng-bind="authority.authorityPhone"></p>
+                                <label for="">Email:</label><p name="" id="" data-ng-bind="authority.authorityEmail"></p>
+                                <label for="">Web:</label><p name="" id="" data-ng-bind="authority.authorityWeb"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div data-ng-if="app == 'list'">
+        <div data-ng-if="app == 'list'" class="row">
             <div data-ng-controller="authorityListController" data-ng-init="init()">
-                <div class="panel panel-default" data-ng-repeat="authority in authorities">
-                    <div class="panel-heading" data-ng-bind="authority.label"></div>
-                    <div class="panel-body">
-                        <label for="">Address:</label><p name="" id="" data-ng-bind="authority.authorityAddress"></p>
-                        <label for="">Phone:</label><p name="" id="" data-ng-bind="authority.authorityPhone"></p>
-                        <label for="">Email:</label><p name="" id="" data-ng-bind="authority.authorityEmail"></p>
-                        <label for="">Web:</label><p name="" id="" data-ng-bind="authority.authorityWeb"></p>
+                <div class="col-md-4 col-sm-6 col-xs-12" data-ng-repeat="authority in authorities">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" data-ng-bind="authority.label"></div>
+                        <div class="panel-body">
+                            <label for="">Address:</label><p name="" id="" data-ng-bind="authority.authorityAddress"></p>
+                            <label for="">Phone:</label><p name="" id="" data-ng-bind="authority.authorityPhone"></p>
+                            <label for="">Email:</label><p name="" id="" data-ng-bind="authority.authorityEmail"></p>
+                            <label for="">Web:</label><p name="" id="" data-ng-bind="authority.authorityWeb"></p>
+                        </div>
                     </div>
                 </div>
             </div>
