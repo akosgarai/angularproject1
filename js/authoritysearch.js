@@ -89,4 +89,26 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
     $scope.setApp = function (appName) {
         $scope.app = appName;
     };
+}]).controller('authorityListController', ['$scope', function ($scope) {
+    $scope.authorities = {};
+    $scope.init = function () {
+        $scope.authorities = [
+            {
+                'id' : 1,
+                'label' : 'Authority Label Nr1',
+                'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                'authorityPhone' : '+3610000000',
+                'authorityEmail' : 'info@example.com',
+                'authorityWeb' : 'http://www.example.com'
+            },
+            {
+                'id' : 2,
+                'label' : 'Authority Label Nr2',
+                'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                'authorityPhone' : '+3610000000',
+                'authorityEmail' : 'info@example.com',
+                'authorityWeb' : 'http://www.example.com'
+            }
+        ];
+    };
 }]);

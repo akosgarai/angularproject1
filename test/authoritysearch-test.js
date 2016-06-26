@@ -224,4 +224,38 @@ describe('Example module Unit Tests', function () {
             expect($scope.app).toEqual(expected);
         });
     });
+    describe('TESTAUTHORITYLIST -authority list related tests - list controller functions', function () {
+        var $scope, controller;
+
+        beforeEach(function () {
+            $scope = {};
+            controller = $controller('authorityListController', { '$scope' : $scope});
+        });
+        it('Checking the app after start', function () {
+            var expected = {};
+            expect($scope.authorities).toEqual(expected);
+        });
+        it('Checking the init function', function () {
+            var expected = [
+                {
+                    'id' : 1,
+                    'label' : 'Authority Label Nr1',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                },
+                {
+                    'id' : 2,
+                    'label' : 'Authority Label Nr2',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                }
+            ];
+            $scope.init();
+            expect($scope.authorities).toEqual(expected);
+        });
+    });
 });

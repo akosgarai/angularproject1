@@ -10,8 +10,8 @@
             <li role="presentation" data-ng-class="{'active': app == 'search'}"><a data-ng-click="setApp('search')">Search</a></li>
             <li role="presentation" data-ng-class="{'active': app == 'list'}"><a data-ng-click="setApp('list')">List</a></li>
         </ul>
-        <div data-ng-controller="authoritysearchController" data-ng-init="init()">
-            <div data-ng-if="app == 'search'">
+        <div data-ng-if="app == 'search'">
+            <div data-ng-controller="authoritysearchController" data-ng-init="init()">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Providers</div>
                     <div class="panel-body">
@@ -25,10 +25,16 @@
                     </div>
                 </div>
             </div>
-            <div data-ng-if="app == 'list'">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">List app</div>
+        </div>
+        <div data-ng-if="app == 'list'">
+            <div data-ng-controller="authorityListController" data-ng-init="init()">
+                <div class="panel panel-default" data-ng-repeat="authority in authorities">
+                    <div class="panel-heading" data-ng-bind="authority.label"></div>
                     <div class="panel-body">
+                        <label for="">Address:</label><p name="" id="" data-ng-bind="authority.authorityAddress"></p>
+                        <label for="">Phone:</label><p name="" id="" data-ng-bind="authority.authorityPhone"></p>
+                        <label for="">Email:</label><p name="" id="" data-ng-bind="authority.authorityEmail"></p>
+                        <label for="">Web:</label><p name="" id="" data-ng-bind="authority.authorityWeb"></p>
                     </div>
                 </div>
             </div>
