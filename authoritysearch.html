@@ -4,14 +4,14 @@
 <script type="text/javascript" src="js/authoritysearch.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
-<body data-ng-app="authoritysearch">
+<body data-ng-app="authoritysearch" data-ng-controller="authorityInitializatorController" data-ng-init="init()">
     <div class="container" data-ng-controller="authorityNavbarController">
         <ul class="nav nav-tabs">
             <li role="presentation" data-ng-class="{'active': app == 'search'}"><a data-ng-click="setApp('search')">Search</a></li>
             <li role="presentation" data-ng-class="{'active': app == 'list'}"><a data-ng-click="setApp('list')">List</a></li>
         </ul>
         <div data-ng-if="app == 'search'">
-            <div data-ng-controller="authoritysearchController" data-ng-init="init()">
+            <div data-ng-controller="authoritysearchController">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Providers</div>
                     <div class="panel-body">

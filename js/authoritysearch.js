@@ -1,9 +1,102 @@
 angular.module('authoritysearch', []).controller('authoritysearchController', ['$scope', function ($scope) {
-    $scope.providers = [];
-    $scope.activities = [];
-
     $scope.selectedProviderId = '';
     $scope.selectedActivities = [];
+    $scope.terminals = [];
+
+
+    $scope.getProviderById = function (id) {
+        for (var e in $scope.providers) {
+            if ($scope.providers[e]['id'] == id) {
+                return $scope.providers[e];
+            }
+        }
+        return {};
+    };
+
+    $scope.getActivityById = function (id) {
+        for (var e in $scope.activities) {
+            if ($scope.activities[e]['id'] == id) {
+                return $scope.activities[e];
+            }
+        }
+        return {};
+    };
+
+    $scope.providerClickHandler = function (providerId) {
+        if ($scope.selectedProviderId == '') {
+            $scope.selectedProviderId = providerId;
+        } else if ($scope.selectedProviderId == providerId){
+            $scope.selectedActivities = [];
+            $scope.selectedProviderId = '';
+        }
+        $scope.getTerminalIds();
+    };
+
+    $scope.needToShowActivity = function (activity) {
+        var ids = activity['parentProviderIds'];
+        if (ids.indexOf($scope.selectedProviderId) > -1) {
+            return true;
+        }
+        if (activity['parentProviderIds'].length == 0) {
+            return true;
+        }
+        return false;
+    };
+
+    $scope.activityClickHandler = function (activityId) {
+        var selActs = $scope.selectedActivities;
+        if (selActs.indexOf(activityId) > -1) {
+            $scope.selectedActivities.splice(selActs.indexOf(activityId), 1);
+        } else {
+            $scope.selectedActivities.push(activityId);
+        }
+        $scope.getTerminalIds();
+    };
+    $scope.getTerminalIds = function () {
+        $scope.terminals = [];
+        if ($scope.selectedProviderId == '') {
+            return;
+        }
+        var provider = $scope.authorityMap[$scope.selectedProviderId];
+        var activities = $scope.selectedActivities;
+        for (var i in activities) {
+            if (typeof (provider[activities[i]]) != 'undefined' && provider[activities[i]]['type'] == 'terminal') {
+                var insert = true;
+                for (var j in $scope.terminals) {
+                    if ($scope.terminals[j]['id'] == provider[activities[i]]['id']) {
+                        insert = false;
+                    }
+                }
+                if (insert) {
+                    $scope.terminals.push($scope.getAuthorityById(provider[activities[i]]['id']));
+                }
+            }
+        }
+    };
+    $scope.getAuthorityById = function (id) {
+        for (var e in $scope.authorities) {
+            if ($scope.authorities[e]['id'] == id) {
+                return $scope.authorities[e];
+            }
+        }
+        return {};
+    };
+}]).controller('authorityNavbarController', ['$scope', function ($scope) {
+    $scope.app = 'search';
+
+    $scope.setApp = function (appName) {
+        $scope.app = appName;
+    };
+}]).controller('authorityInitializatorController', ['$scope', function ($scope) {
+    $scope.authorityLoaded = false;
+    $scope.providerLoaded = false;
+    $scope.activityLoaded = false;
+    $scope.authorityMapLoaded = false;
+
+    $scope.providers = [];
+    $scope.activities = [];
+    $scope.authorities = [];
+    $scope.authorityMap = {};
 
     $scope.init = function () {
         $scope.providers = [
@@ -94,114 +187,7 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
                 4 : {'type' : 'terminal', 'id' : 3}
             }
         };
-        $scope.selectedProviderId = '';
-        $scope.selectedActivities = [];
     };
 
-    $scope.getProviderById = function (id) {
-        for (var e in $scope.providers) {
-            if ($scope.providers[e]['id'] == id) {
-                return $scope.providers[e];
-            }
-        }
-        return {};
-    };
-
-    $scope.getActivityById = function (id) {
-        for (var e in $scope.activities) {
-            if ($scope.activities[e]['id'] == id) {
-                return $scope.activities[e];
-            }
-        }
-        return {};
-    };
-
-    $scope.providerClickHandler = function (providerId) {
-        if ($scope.selectedProviderId == '') {
-            $scope.selectedProviderId = providerId;
-        } else if ($scope.selectedProviderId == providerId){
-            $scope.selectedActivities = [];
-            $scope.selectedProviderId = '';
-        }
-        $scope.getTerminalIds();
-    };
-
-    $scope.needToShowActivity = function (activity) {
-        var ids = activity['parentProviderIds'];
-        if (ids.indexOf($scope.selectedProviderId) > -1) {
-            return true;
-        }
-        if (activity['parentProviderIds'].length == 0) {
-            return true;
-        }
-        return false;
-    };
-
-    $scope.activityClickHandler = function (activityId) {
-        var selActs = $scope.selectedActivities;
-        if (selActs.indexOf(activityId) > -1) {
-            $scope.selectedActivities.splice(selActs.indexOf(activityId), 1);
-        } else {
-            $scope.selectedActivities.push(activityId);
-        }
-        $scope.getTerminalIds();
-    };
-    $scope.getTerminalIds = function () {
-        $scope.terminals = [];
-        if ($scope.selectedProviderId == '') {
-            return;
-        }
-        var provider = $scope.authorityMap[$scope.selectedProviderId];
-        var activities = $scope.selectedActivities;
-        for (var i in activities) {
-            if (typeof (provider[activities[i]]) != 'undefined' && provider[activities[i]]['type'] == 'terminal') {
-                var insert = true;
-                for (var j in $scope.terminals) {
-                    if ($scope.terminals[j]['id'] == provider[activities[i]]['id']) {
-                        insert = false;
-                    }
-                }
-                if (insert) {
-                    $scope.terminals.push($scope.getAuthorityById(provider[activities[i]]['id']));
-                }
-            }
-        }
-    };
-    $scope.getAuthorityById = function (id) {
-        for (var e in $scope.authorities) {
-            if ($scope.authorities[e]['id'] == id) {
-                return $scope.authorities[e];
-            }
-        }
-        return {};
-    };
-}]).controller('authorityNavbarController', ['$scope', function ($scope) {
-    $scope.app = 'search';
-    $scope.terminals = [];
-
-    $scope.setApp = function (appName) {
-        $scope.app = appName;
-    };
 }]).controller('authorityListController', ['$scope', function ($scope) {
-    $scope.authorities = {};
-    $scope.init = function () {
-        $scope.authorities = [
-            {
-                'id' : 1,
-                'label' : 'Authority Label Nr1',
-                'authorityAddress' : 'City, Street, house, building, floor, door, ...',
-                'authorityPhone' : '+3610000000',
-                'authorityEmail' : 'info@example.com',
-                'authorityWeb' : 'http://www.example.com'
-            },
-            {
-                'id' : 2,
-                'label' : 'Authority Label Nr2',
-                'authorityAddress' : 'City, Street, house, building, floor, door, ...',
-                'authorityPhone' : '+3610000000',
-                'authorityEmail' : 'info@example.com',
-                'authorityWeb' : 'http://www.example.com'
-            }
-        ];
-    };
 }]);

@@ -20,9 +20,7 @@ describe('Example module Unit Tests', function () {
     describe('TEST002 - $scope.init function test', function () {
         it('it checks the init function - mock the init request for providers and activities', function () {
             var $scope = {};
-            var controller = $controller('authoritysearchController', { '$scope' : $scope});
-            $scope.providers = [];
-            $scope.activities = [];
+            var controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             var expectedProviders = [
                 {
                     'label' : 'Provider1 label',
@@ -111,21 +109,15 @@ describe('Example module Unit Tests', function () {
                     4 : {'type' : 'terminal', 'id' : 3}
                 }
             };
-            var expectedSelectedProviderId = '';
-            var expectedSelectedActivies = [];
             $scope.init();
             expect([
                 $scope.providers,
                 $scope.activities,
-                $scope.selectedProviderId,
-                $scope.selectedActivities,
                 $scope.authorities,
                 $scope.authorityMap
             ]).toEqual([
                 expectedProviders,
                 expectedActivities,
-                expectedSelectedProviderId,
-                expectedSelectedActivies,
                 expectedAuthorities,
                 expectedAuthorityMap
             ]);
@@ -137,9 +129,33 @@ describe('Example module Unit Tests', function () {
         beforeEach(function () {
             $scope = {};
             controller = $controller('authoritysearchController', { '$scope' : $scope});
-            $scope.providers = [];
-            $scope.activities = [];
-            $scope.init();
+            $scope.providers = [
+                {
+                    'label' : 'Provider1 label',
+                    'id' : 1
+                },
+                {
+                    'label' : 'Provider2 label',
+                    'id' : 2
+                }
+            ];
+            $scope.activities = [
+                {
+                    'label' : 'activity label 1',
+                    'id' : 1,
+                    'parentProviderIds' : []
+                },
+                {
+                    'label' : 'activity label 2',
+                    'id' : 2,
+                    'parentProviderIds' : [2]
+                },
+                {
+                    'label' : 'hidden activity label',
+                    'id' : 3,
+                    'parentProviderIds' : [1]
+                }
+            ];
         });
         it('try to find an existing id, so it should return activity object', function () {
             var expected = {
@@ -161,10 +177,11 @@ describe('Example module Unit Tests', function () {
 
         beforeEach(function () {
             $scope = {};
-            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
             $scope.init();
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('try to find an existing id, so it should return provider object', function () {
             var expected = {
@@ -185,10 +202,11 @@ describe('Example module Unit Tests', function () {
 
         beforeEach(function () {
             $scope = {};
-            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
             $scope.init();
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('It checks the selectedProviderId after Clicked Provider (id:2)', function () {
             var expected = 2;
@@ -218,10 +236,11 @@ describe('Example module Unit Tests', function () {
 
         beforeEach(function () {
             $scope = {};
-            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
             $scope.init();
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('Activity (id:1) should be shown, because of the empty parent list (provider (id:1) is selected)', function () {
             var expected = true;
@@ -244,10 +263,11 @@ describe('Example module Unit Tests', function () {
 
         beforeEach(function () {
             $scope = {};
-            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
             $scope.init();
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('Checking the selectedActivites array - first with empty array and clicking the activity (id:1)', function () {
             var expected = [1];
@@ -281,10 +301,11 @@ describe('Example module Unit Tests', function () {
 
         beforeEach(function () {
             $scope = {};
-            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
             $scope.init();
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('try to find an existing id, so it should return provider object', function () {
             var expected = {
@@ -309,10 +330,11 @@ describe('Example module Unit Tests', function () {
 
         beforeEach(function () {
             $scope = {};
-            controller = $controller('authoritysearchController', { '$scope' : $scope});
+            controller = $controller('authorityInitializatorController', { '$scope' : $scope});
             $scope.providers = [];
             $scope.activities = [];
             $scope.init();
+            controller = $controller('authoritysearchController', { '$scope' : $scope});
         });
         it('Clicking to provider (id:1) and activity (id:3) and checking the terminal authorities', function () {
             var expected = [
@@ -447,32 +469,6 @@ describe('Example module Unit Tests', function () {
         beforeEach(function () {
             $scope = {};
             controller = $controller('authorityListController', { '$scope' : $scope});
-        });
-        it('Checking the app after start', function () {
-            var expected = {};
-            expect($scope.authorities).toEqual(expected);
-        });
-        it('Checking the init function', function () {
-            var expected = [
-                {
-                    'id' : 1,
-                    'label' : 'Authority Label Nr1',
-                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
-                    'authorityPhone' : '+3610000000',
-                    'authorityEmail' : 'info@example.com',
-                    'authorityWeb' : 'http://www.example.com'
-                },
-                {
-                    'id' : 2,
-                    'label' : 'Authority Label Nr2',
-                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
-                    'authorityPhone' : '+3610000000',
-                    'authorityEmail' : 'info@example.com',
-                    'authorityWeb' : 'http://www.example.com'
-                }
-            ];
-            $scope.init();
-            expect($scope.authorities).toEqual(expected);
         });
     });
 });
