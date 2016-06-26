@@ -14,6 +14,14 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             {
                 'label' : 'Provider2 label',
                 'id' : 2
+            },
+            {
+                'label' : 'Provider3 label',
+                'id' : 3
+            },
+            {
+                'label' : 'Provider4 label',
+                'id' : 4
             }
         ];
         $scope.activities = [
@@ -31,6 +39,11 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
                 'label' : 'hidden activity label',
                 'id' : 3,
                 'parentProviderIds' : [1]
+            },
+            {
+                'label' : 'Activity label 3',
+                'id' : 4,
+                'parentProviderIds' : [3]
             }
         ];
         $scope.authorities = [
@@ -49,6 +62,22 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
                 'authorityPhone' : '+3610000000',
                 'authorityEmail' : 'info@example.com',
                 'authorityWeb' : 'http://www.example.com'
+            },
+            {
+                'id' : 3,
+                'label' : 'Authority Label Nr3',
+                'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                'authorityPhone' : '+3610000000',
+                'authorityEmail' : 'info@example.com',
+                'authorityWeb' : 'http://www.example.com'
+            },
+            {
+                'id' : 4,
+                'label' : 'Authority Label Nr4',
+                'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                'authorityPhone' : '+3610000000',
+                'authorityEmail' : 'info@example.com',
+                'authorityWeb' : 'http://www.example.com'
             }
         ];
         $scope.authorityMap = {
@@ -59,6 +88,10 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             2 : {
                 1 : {'type' : 'terminal', 'id' : 1},
                 2 : {'type' : 'terminal', 'id' : 2}
+            },
+            3 : {
+                1 : {'type' : 'terminal', 'id' : 3},
+                4 : {'type' : 'terminal', 'id' : 3}
             }
         };
         $scope.selectedProviderId = '';
@@ -122,7 +155,15 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
         var activities = $scope.selectedActivities;
         for (var i in activities) {
             if (typeof (provider[activities[i]]) != 'undefined' && provider[activities[i]]['type'] == 'terminal') {
-                $scope.terminals.push($scope.getAuthorityById(provider[activities[i]]['id']));
+                var insert = true;
+                for (var j in $scope.terminals) {
+                    if ($scope.terminals[j]['id'] == provider[activities[i]]['id']) {
+                        insert = false;
+                    }
+                }
+                if (insert) {
+                    $scope.terminals.push($scope.getAuthorityById(provider[activities[i]]['id']));
+                }
             }
         }
     };

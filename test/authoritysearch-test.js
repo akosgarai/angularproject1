@@ -31,6 +31,14 @@ describe('Example module Unit Tests', function () {
                 {
                     'label' : 'Provider2 label',
                     'id' : 2
+                },
+                {
+                    'label' : 'Provider3 label',
+                    'id' : 3
+                },
+                {
+                    'label' : 'Provider4 label',
+                    'id' : 4
                 }
             ];
             var expectedActivities = [
@@ -48,6 +56,11 @@ describe('Example module Unit Tests', function () {
                     'label' : 'hidden activity label',
                     'id' : 3,
                     'parentProviderIds' : [1]
+                },
+                {
+                    'label' : 'Activity label 3',
+                    'id' : 4,
+                    'parentProviderIds' : [3]
                 }
             ];
             var expectedAuthorities = [
@@ -66,6 +79,22 @@ describe('Example module Unit Tests', function () {
                     'authorityPhone' : '+3610000000',
                     'authorityEmail' : 'info@example.com',
                     'authorityWeb' : 'http://www.example.com'
+                },
+                {
+                    'id' : 3,
+                    'label' : 'Authority Label Nr3',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                },
+                {
+                    'id' : 4,
+                    'label' : 'Authority Label Nr4',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
                 }
             ];
             var expectedAuthorityMap = {
@@ -76,6 +105,10 @@ describe('Example module Unit Tests', function () {
                 2 : {
                     1 : {'type' : 'terminal', 'id' : 1},
                     2 : {'type' : 'terminal', 'id' : 2}
+                },
+                3 : {
+                    1 : {'type' : 'terminal', 'id' : 3},
+                    4 : {'type' : 'terminal', 'id' : 3}
                 }
             };
             var expectedSelectedProviderId = '';
@@ -318,6 +351,46 @@ describe('Example module Unit Tests', function () {
             $scope.providerClickHandler(1);
             $scope.activityClickHandler(3);
             $scope.activityClickHandler(1);
+            expect($scope.terminals).toEqual(expected);
+        });
+        it('Clicking to provider (id:1) and activities in the following order (id:1, id:3) and checking the terminal authorities', function () {
+            var expected = [
+                {
+                    'id' : 1,
+                    'label' : 'Authority Label Nr1',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                },
+                {
+                    'id' : 2,
+                    'label' : 'Authority Label Nr2',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                }
+            ];
+            $scope.providerClickHandler(1);
+            $scope.activityClickHandler(1);
+            $scope.activityClickHandler(3);
+            expect($scope.terminals).toEqual(expected);
+        });
+        it('Clicking to provider (id:3) and activities in the following order (id:1, id:4) and checking the terminal authorities', function () {
+            var expected = [
+                {
+                    'id' : 3,
+                    'label' : 'Authority Label Nr3',
+                    'authorityAddress' : 'City, Street, house, building, floor, door, ...',
+                    'authorityPhone' : '+3610000000',
+                    'authorityEmail' : 'info@example.com',
+                    'authorityWeb' : 'http://www.example.com'
+                }
+            ];
+            $scope.providerClickHandler(3);
+            $scope.activityClickHandler(1);
+            $scope.activityClickHandler(4);
             expect($scope.terminals).toEqual(expected);
         });
         it('Clicking to provider (id:1) and activities in the following order (id:1, id:3) and checking the terminal authorities', function () {
