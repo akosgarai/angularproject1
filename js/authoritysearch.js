@@ -33,7 +33,24 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
     };
 
     $scope.needToShowActivity = function (activity) {
-        var ids = activity['parentProviderIds'];
+        var providerIds = activity['parentProviderIds'];
+        var activityIds = activity['parentActivityIds'];
+        if (activity['parentProviderIds'].length > 0 && providerIds[0] != '' && providerIds.indexOf($scope.selectedProviderId) == -1) {
+            return false;
+        }
+        if (activity['parentActivityIds'].length > 0 && activityIds[0] != '' ) {
+            var toShow = false;
+            for (var id in activityIds) {
+                if ($scope.selectedActivities.indexOf(activityIds[id]) > -1) {
+                    toShow = true;
+                }
+            }
+            if (toShow == false) {
+                return false;
+            }
+        }
+        return true;
+        /*
         if (ids.indexOf($scope.selectedProviderId) > -1) {
             return true;
         }
@@ -41,6 +58,7 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             return true;
         }
         return false;
+        */
     };
 
     $scope.activityClickHandler = function (activityId) {
@@ -128,21 +146,25 @@ angular.module('authoritysearch', []).controller('authoritysearchController', ['
             {
                 'label' : 'activity label 1',
                 'id' : 1,
+                'parentActivityIds' : [],
                 'parentProviderIds' : []
             },
             {
                 'label' : 'activity label 2',
                 'id' : 2,
+                'parentActivityIds' : [],
                 'parentProviderIds' : [2]
             },
             {
                 'label' : 'hidden activity label',
                 'id' : 3,
+                'parentActivityIds' : [],
                 'parentProviderIds' : [1]
             },
             {
                 'label' : 'Activity label 3',
                 'id' : 4,
+                'parentActivityIds' : [1],
                 'parentProviderIds' : [3]
             }
         ];

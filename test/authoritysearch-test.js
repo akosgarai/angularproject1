@@ -43,21 +43,25 @@ describe('Example module Unit Tests', function () {
                 {
                     'label' : 'activity label 1',
                     'id' : 1,
+                    'parentActivityIds' : [],
                     'parentProviderIds' : []
                 },
                 {
                     'label' : 'activity label 2',
                     'id' : 2,
+                    'parentActivityIds' : [],
                     'parentProviderIds' : [2]
                 },
                 {
                     'label' : 'hidden activity label',
                     'id' : 3,
+                    'parentActivityIds' : [],
                     'parentProviderIds' : [1]
                 },
                 {
                     'label' : 'Activity label 3',
                     'id' : 4,
+                    'parentActivityIds' : [1],
                     'parentProviderIds' : [3]
                 }
             ];
@@ -143,16 +147,19 @@ describe('Example module Unit Tests', function () {
                 {
                     'label' : 'activity label 1',
                     'id' : 1,
+                    'parentActivityIds' : [],
                     'parentProviderIds' : []
                 },
                 {
                     'label' : 'activity label 2',
                     'id' : 2,
+                    'parentActivityIds' : [],
                     'parentProviderIds' : [2]
                 },
                 {
                     'label' : 'hidden activity label',
                     'id' : 3,
+                    'parentActivityIds' : [],
                     'parentProviderIds' : [1]
                 }
             ];
@@ -161,6 +168,7 @@ describe('Example module Unit Tests', function () {
             var expected = {
                 'label' : 'hidden activity label',
                 'id' : 3,
+                'parentActivityIds' : [],
                 'parentProviderIds' : [1]
             };
             var activity = $scope.getActivityById(3);
@@ -256,6 +264,12 @@ describe('Example module Unit Tests', function () {
             var expected = false;
             $scope.providerClickHandler(1);
             expect($scope.needToShowActivity($scope.activities[1])).toEqual(expected);
+        });
+        it('Activity (id:4) should be shown, because parent list (provider (id:3))and activity (id:1) are selected', function () {
+            var expected = true;
+            $scope.providerClickHandler(3);
+            $scope.activityClickHandler(1);
+            expect($scope.needToShowActivity($scope.activities[3])).toEqual(expected);
         });
     });
     describe('TEST007 - $scope.activityClickHandler function tests', function () {
